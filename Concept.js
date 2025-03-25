@@ -4,3 +4,4 @@
 // 4- If we use it outside the browser then we can access the data files of the system and can interact with the database like mongodb, mysql without needed of the browser api's
 // 5- We will not prefer nodejs if we are doing the heavy server side processing like- image manipulation, video conversions and file compressions
 // 6- Node.js is a single threaded based on event driven, non blocking I/O Model
+//
