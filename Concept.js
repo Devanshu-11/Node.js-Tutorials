@@ -8,3 +8,19 @@
 // 8- Context switching means when cpu switches from one process to another, it saves the current process state and loading the new process state, but when there is large application model,  cpu will spend most of its time doing the context switching and reducing overall efficiency instead of doing the actual tasks
 // 9- Event Driven means Nodejs listens for the specific events like- user requests, read files, database queries etc and trigger the corresponding callback function asynchronously when the event occurs, instead of executing whole code sequentially 
 // 10- Non-Blocking I/O Model means handling requests asynchronously without waiting for an operation to complete before moving to the next task.
+
+// Node Repl-
+// Node repl- It stands for Read,Eval,Print,Loop and it is basically a command line environment which is used for run the js code outside the browser
+// to initialize the repl, we write node in terminal
+// read- It reads the js expression you enter
+// eval-It evaluates expression
+// print-It prints the result of the evaluation.
+// loop-The process repeats, so you can continue typing and testing new code
+
+// synchronous and asynchronous operatrions-
+// In synchronous operations-Here tasks are completed one after another, and here it stops and wait for task to complete before moving to next task
+// In asynchronous operations-it does not wait for the task to complete, instead move to next task and callback,promises, async-await will handle result once task is completed
+
+// Callback hell-
+// Callback hell is a condition where multiple nested callbacks are used in asynchronous functions, making the code hard to read, maintain, and debug.
+

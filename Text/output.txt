@@ -1,0 +1,1 @@
+Hi, I want to write the file in the output.txt
