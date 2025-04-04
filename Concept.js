@@ -8,7 +8,7 @@
 // 8- Context switching means when cpu switches from one process to another, it saves the current process state and loading the new process state, but when there is large application model,  cpu will spend most of its time doing the context switching and reducing overall efficiency instead of doing the actual tasks
 // 9- Event Driven means Nodejs listens for the specific events like- user requests, read files, database queries etc and trigger the corresponding callback function asynchronously when the event occurs, instead of executing whole code sequentially 
 // 10- Non-Blocking I/O Model means handling requests asynchronously without waiting for an operation to complete before moving to the next task.
-
+// 11- NPM (Node Package Manager) is the default package manager for the Node.js. It helps developers to manage libraries and dependencies for their Node.js projects. With NPM, you can install, share, and manage packages (also known as modules or libraries) that your project depends on.
 // Node Repl-
 // Node repl- It stands for Read,Eval,Print,Loop and it is basically a command line environment which is used for run the js code outside the browser
 // to initialize the repl, we write node in terminal

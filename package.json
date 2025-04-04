@@ -1,0 +1,19 @@
+{
+  "name": "node.js-tutorials",
+  "version": "1.0.0",
+  "main": "1-index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devanshu-11/Node.js-Tutorials.git"
+  },
+  "author": "Devanshu Kansal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Devanshu-11/Node.js-Tutorials/issues"
+  },
+  "homepage": "https://github.com/Devanshu-11/Node.js-Tutorials#readme",
+  "description": ""
+}
