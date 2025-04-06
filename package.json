@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "1-index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
     "url": "https://github.com/Devanshu-11/Node.js-Tutorials/issues"
   },
   "homepage": "https://github.com/Devanshu-11/Node.js-Tutorials#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "slugify": "^1.6.6"
+  }
 }

@@ -3,6 +3,7 @@
 const http=require('http');
 const url=require('url');
 const fs=require('fs');
+const slugify=require('slugify');
 const replaceTemplate=require('./modules/replaceTemplate');
 
 const hostname = '127.0.0.1';
@@ -12,6 +13,9 @@ const port = 3000;
 // __dirname specifies actual path of directory that contains the currently executing script file
 const newData=fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8');
 const dataObject=JSON.parse(newData);
+
+const slugs=dataObject.map(el=> slugify(el.productName, {lower:true}));
+console.log(slugs);
 
 const tempOverview=fs.readFileSync(`${__dirname}/templates/template-overview.html`,'utf-8');
 const tempCard=fs.readFileSync(`${__dirname}/templates/template-card.html`,'utf-8');
