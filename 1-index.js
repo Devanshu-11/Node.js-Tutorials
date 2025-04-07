@@ -18,7 +18,7 @@ fs.readFile('./Text/start.txt','utf-8',(err,data)=>{
 });
 console.log("We will read file asynchronously");
 
-
+// reading the file asynchronously
 fs.readFile('./Text/start.txt','utf-8',(err,data1)=>{
     if(err){
         console.log("Error has been found");
@@ -29,7 +29,7 @@ fs.readFile('./Text/start.txt','utf-8',(err,data1)=>{
     });
 });
 
-// to write the file in asynchronously
+// writing the file asynchronously
 const textWrite='In this, Now we will write the file asynchronously in end.txt';
 fs.writeFile('./Text/end.txt',textWrite,'utf-8',err=>{
     console.log("File has been written properly");

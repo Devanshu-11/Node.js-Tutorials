@@ -23,3 +23,16 @@
 
 // Callback hell-
 // Callback hell is a condition where multiple nested callbacks are used in asynchronous functions, making the code hard to read, maintain, and debug.
+
+// Http requests
+// Get- It is used to retrieve the data from the server
+// Post- It is used to send the data to server and create a new resource, here sending the same requests multiple time, it is basically creating the multiple resources
+// Put- It is update or replace an existing resource on server, if the resource is not exist, it will create a new resource and it does not update partial resource
+// Delete- It deletes a resource from server
+// Patch- It can partially or fully  update the resource from the server, and if the resource is not present, then patch will not create it
+
+// Application Programming Interface
+// It means Api which is Application Programming Interface is a set of rules that allows different software applications to communicate to each other
+
+// Middlewares-
+// Middleware is a function that is running during the request response cycle, they basically have access to request and response objects, and they can basically interact with them before passing the control to next step, eg- login, logout etc

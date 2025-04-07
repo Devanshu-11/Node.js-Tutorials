@@ -12,11 +12,14 @@ const port = 3000;
 // we save it here because we do not need to read the data each time when req is there, instead we can read only one time and use it again
 // __dirname specifies actual path of directory that contains the currently executing script file
 const newData=fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8');
+
+// After reading the data, we have parse it
 const dataObject=JSON.parse(newData);
 
 const slugs=dataObject.map(el=> slugify(el.productName, {lower:true}));
 console.log(slugs);
 
+// read all the files Synchronously
 const tempOverview=fs.readFileSync(`${__dirname}/templates/template-overview.html`,'utf-8');
 const tempCard=fs.readFileSync(`${__dirname}/templates/template-card.html`,'utf-8');
 const tempProduct=fs.readFileSync(`${__dirname}/templates/template-product.html`,'utf-8');

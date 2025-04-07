@@ -12,7 +12,6 @@ const replaceTemplate=(temp,product)=>{
     if(product.organic==false){
         output=output.replace(/{%NOT_ORGANIC%}/g,'not-organic');
     }
-
     return output;
 }
 
