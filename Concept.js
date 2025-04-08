@@ -27,7 +27,7 @@
 // Http requests
 // Get- It is used to retrieve the data from the server
 // Post- It is used to send the data to server and create a new resource, here sending the same requests multiple time, it is basically creating the multiple resources
-// Put- It is update or replace an existing resource on server, if the resource is not exist, it will create a new resource and it does not update partial resource
+// Put- It is update or replace an existing resource on server, if the resource is not exist, it will create a new resource and it will update partial resource but condition is that all parameters should be required otherwise it will replace it
 // Delete- It deletes a resource from server
 // Patch- It can partially or fully  update the resource from the server, and if the resource is not present, then patch will not create it
 

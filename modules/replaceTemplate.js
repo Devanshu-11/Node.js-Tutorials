@@ -9,9 +9,11 @@ const replaceTemplate=(temp,product)=>{
     output=output.replace(/{%DESCRIPTION%}/g,product.description);
     output=output.replace(/{%ID%}/g,product.id);
 
+    // validations
     if(product.organic==false){
         output=output.replace(/{%NOT_ORGANIC%}/g,'not-organic');
     }
+
     return output;
 }
 

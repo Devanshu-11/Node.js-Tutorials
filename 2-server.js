@@ -57,7 +57,7 @@ const server=http.createServer((req,res)=>{
         console.log(query);
         res.end(output);
 
-        // api page
+        // about api page
     }else if(pathname==='/api'){
         res.writeHead(200, {'Content-type': 'application/json'})
         res.end(newData);
