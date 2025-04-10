@@ -36,3 +36,16 @@
 
 // Middlewares-
 // Middleware is a function that is running during the request response cycle, they basically have access to request and response objects, and they can basically interact with them before passing the control to next step, eg- login, logout etc
+
+// MongoDb-
+// MongoDb is a NoSql database means it is non relational database which helps for storing the large amount of data and it stores the data in Bson format which is binary javascript object notation and Bson has more advantages over Json  which add additional data types such as ObjectId, Date etc
+// Mongodb stored the data in documents and documents are stored in collections
+// In Mongodb here the data is particularly stored in the key value pairs
+
+// Promises-
+// A promise function represents an operation which is not completed yet but it will either succeed or fail.
+// It has three stages:
+// 1- Pending: It’s still working.
+// 2- Resolved: It finished successfully.
+// 3- Rejected: Something went wrong.
+// You can use .then() to handle success, .catch() for errors, and .finally() for code that runs after the task is done,
