@@ -49,3 +49,24 @@
 // 2- Resolved: It finished successfully.
 // 3- Rejected: Something went wrong.
 // You can use .then() to handle success, .catch() for errors, and .finally() for code that runs after the task is done,
+
+// About event loop and thread pool
+// Event Loop is responsible for handling asynchronous operations by executing callbacks etc and thread pool is used for more heavy work like file compression etc and node.js programming language is itself written in c++ and javascript 
+
+// process-
+// 1- When we use node in a computer means we are using the node process running on computer and process is just a program under execution
+// 2- And in nodejs it is a single thread and in single thread, when a program is initialized, all top level code is executed means code that is not inside any callback function
+// 3- All the modules that application need are required
+// 4- all callbacks are registered and after that event loop finally starts running but when there is a heavy task then it goes into thread pool which has 4 threads seperated from the main single thread and By default, Node.js uses a libuv thread pool with 4 threads, but it can be increased up to a maximum of 128 threads
+// 5- Non top level code means which includes the callback functions are executed in the event loop
+// 6- And event loop automatically offloads heavy task in that thread pool and these are heavy tasks mostly operating with the file system and it do it because we do not want our event loop gets block
+
+// Events 
+// Event loop recieves event each time something important happens and call the necessary callbacks
+
+// phases of callback queue as each event loop has its own callback queue
+// Event loop has multiple phases and each phase has its own callback queue which are callbacks coming from events that event loop receives and it has 4 phases-
+// 1- Timers Phase- Executes callbacks from setTimeout() and setInterval()
+// 2- I/O polling and callbacks-polling means new I/O events ready to be processes and put in callback queue 
+// 3- set Immediate callbacks- it is special type of timer which is used to process callbacks immediately after the I/O polling and execution phase
+// 4- close callbacks- all close events are processed when web server or web sockets get shut down

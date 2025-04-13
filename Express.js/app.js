@@ -1,11 +1,15 @@
 // importing the express library
 const express=require('express');
 const morgan=require('morgan');
+const cors=require('cors');
 const tourRouter=require('./routes/tourRoutes');
 const userRouter=require('./routes/userRoutes');
 
 // to create the instance of express application
 const app=express();
+
+// use of cors
+app.use(cors());
 
 // morgan helps to log details about the incoming requests to the server and it is also a middleware function
 app.use(morgan('dev'));
