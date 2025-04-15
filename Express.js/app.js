@@ -8,7 +8,7 @@ const userRouter=require('./routes/userRoutes');
 // to create the instance of express application
 const app=express();
 
-// use of cors
+// use of cors middleware
 app.use(cors());
 
 // morgan helps to log details about the incoming requests to the server and it is also a middleware function

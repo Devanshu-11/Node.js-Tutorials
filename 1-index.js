@@ -1,4 +1,4 @@
-// The fs module is used for interacting with the file system, enabling tasks like reading, writing, and manipulating files and directories.
+// The fs module which is a core module which is used for interacting with the file system, enabling tasks like reading, writing, and manipulating files and directories.
 const fs=require('fs');
 
 // read the file for the synchronously
@@ -16,6 +16,7 @@ console.log("Write File sync is executed properly");
 fs.readFile('./Text/start.txt','utf-8',(err,data)=>{
     console.log(data);
 });
+
 console.log("We will read file asynchronously");
 
 // reading the file asynchronously

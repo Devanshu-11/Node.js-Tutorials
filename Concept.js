@@ -70,3 +70,10 @@
 // 2- I/O polling and callbacks-polling means new I/O events ready to be processes and put in callback queue 
 // 3- set Immediate callbacks- it is special type of timer which is used to process callbacks immediately after the I/O polling and execution phase
 // 4- close callbacks- all close events are processed when web server or web sockets get shut down
+
+// Requiring Module different phases-
+// 1- Path to required module is resolved and it is loaded in our nodejs Application and if it does not find, it will thrown an error and execution will be stopped 
+// 2- Wrapping happens- it is wrapped in a special function which will provide access to special objects like- require, exports, filename, dirname etc
+// 3- module code is executed- code gets executed by nodejs runtime
+// 4- Returning exports- The object assigned to module.exports is returned when the module is required and if module.exports is not explicitly set, exports is returned by default.
+// 5- Entire module gets cached- require same module multiple time gets same results

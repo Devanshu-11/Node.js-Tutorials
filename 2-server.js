@@ -4,6 +4,8 @@ const http=require('http');
 const url=require('url');
 const fs=require('fs');
 const slugify=require('slugify');
+
+// it is a developer module
 const replaceTemplate=require('./modules/replaceTemplate');
 
 const hostname = '127.0.0.1';

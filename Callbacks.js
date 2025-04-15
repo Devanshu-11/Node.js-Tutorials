@@ -18,4 +18,4 @@ fs.readFile(`${__dirname}/Text/dog.txt`,(err,data)=>{
     });
 });
 
-// As in this code, we are doing the nested callbacks functions which leads to callback hell and it is making the code hard to read, maintain, and debug and here we use promises
+// As in this code, we are doing the nested callbacks functions which leads to callback hell and it is making the code hard to read, maintain, and debug and here we use promises to avoid callback hell
