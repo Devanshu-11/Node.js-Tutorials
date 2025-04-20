@@ -77,3 +77,35 @@
 // 3- module code is executed- code gets executed by nodejs runtime
 // 4- Returning exports- The object assigned to module.exports is returned when the module is required and if module.exports is not explicitly set, exports is returned by default.
 // 5- Entire module gets cached- require same module multiple time gets same results
+
+// MongoDb commands-
+// 1- To insert in database-
+// 1- mongosh- To open Mongo Shell
+// 2- use test- Now if we want to switch to existing database but if it not exists, then it will create new database
+// 3- In database, we have collections and in each collections, we have document inside it and we create document in mongoshell 
+// 4- db.tours.insertOne({name: "The Forest", price: 297, rating: 4.3})- to create one document 
+// 5- db.tours.insertMany([{name: "Movie",price: 1234, rating:4.2},{name: "The movie", price: 2340, rating: 4.1, difficulty: "easy"}]) -To create more than one document at a same time, we use array
+// 6- Also we get the objectId, which is basically the unique identifier of this document
+
+// 2- To find the created document 
+// 1- db.tours.find()- to find all the documents in a certain collection 
+// 2- db.tours.find({name: "The movie"})- to search based on specific criteria
+// 3- db.tours.find({price: {$lte: 1500}})- to find the price of all movies which is less than or equals to 1500
+// 4- db.tours.find({price: {$lte: 1500}, rating: {$gte: 4.5}})- to find movie which is less than or equals to 1500 and rating greater than or equals to 4.5
+// 5- db.tours.find({$or: [{price: {$lt: 500}},{rating: {$gt: 4.2}}]}) -To check either one part or another part
+// 6- db.tours.find({$or: [{price: {$lt: 500}},{rating: {$gt: 4.6}}]},{name :1}) - if we only want name as an output 
+
+// 3- to show all the databases and collections associated with it 
+// 1- show dbs- it shows all the databases
+// 2-show collections- it shows all the existing collections
+
+// 4- To Update the collections-
+// 1- db.tours.updateOne({movie: "The snow"}, {$set: {movie: "The snow adventure"}})- To update the movie name and it will only update one 
+// 2- db.tours.updateMany({movie: "The snow"}, {$set: {movie: "The snow adventure"}})- To update the movie name and it will only update all
+
+// 5- To delete the document 
+// 1- db.tours.deleteMany({rating: {$lte: 4.3}})- to delete all documents having rating less than 4.3 
+// 2- db.tours.deleteMany({})- to delete all the documents 
+
+// 6- to quit the mongo shell 
+// 1-quit()- In order to quit the mongo shell 
