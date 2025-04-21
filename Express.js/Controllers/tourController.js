@@ -31,82 +31,82 @@ exports.checkBody=(req,res,next)=>{
 }
 
 // to get all the tours
-exports.getAllTours=(req,res)=>{
-    console.log(req.requestTime);
+// exports.getAllTours=(req,res)=>{
+//     console.log(req.requestTime);
 
-    res.status(200).json({
-        status: 'success',
-        requestedAt: req.requestTime,
-        results: tours.length,
-        data: {
-            tours,
-        }
-    });
-};
+//     res.status(200).json({
+//         status: 'success',
+//         requestedAt: req.requestTime,
+//         results: tours.length,
+//         data: {
+//             tours,
+//         }
+//     });
+// };
 
 // get particular tour by id
-exports.getTourById=(req,res)=>{
-    const id = req.params.id * 1;
+// exports.getTourById=(req,res)=>{
+//     const id = req.params.id * 1;
 
-    // Searching for the tour with matching id
-    const tour=tours.find(el=>el.id===id);
+//     // Searching for the tour with matching id
+//     const tour=tours.find(el=>el.id===id);
 
-    res.status(200).json({
-        status: 'success',
-        data: {
-            tour,
-        }
-    });
-};
+//     res.status(200).json({
+//         status: 'success',
+//         data: {
+//             tour,
+//         }
+//     });
+// };
 
 // Posting the particular tour
-exports.postTour=(req,res)=>{
+// exports.postTour=(req,res)=>{
 
-    // creating the id by accessing the previous id and then increment it
-    const newId=tours[tours.length-1].id+1;
+//     // creating the id by accessing the previous id and then increment it
+//     const newId=tours[tours.length-1].id+1;
 
-    // Then creating the object by combining id with the data from client request
-    const newTour= Object.assign ({id: newId}, req.body);
+//     // Then creating the object by combining id with the data from client request
+//     const newTour= Object.assign ({id: newId}, req.body);
 
-    // push this tour into tours array
-    tours.push(newTour);
+//     // push this tour into tours array
+//     tours.push(newTour);
 
-    // Writing to file synchronously
-    fs.writeFileSync(`${__dirname}/../dev-data/data/tours-simple.json`,JSON.stringify(tours),err=>{
-        res.status(201).json({
-            status: 'success',
-            data: {
-                newTour,
-            }
-        });
-    });
+//     // Writing to file synchronously
+//     fs.writeFileSync(`${__dirname}/../dev-data/data/tours-simple.json`,JSON.stringify(tours),err=>{
+//         res.status(201).json({
+//             status: 'success',
+//             data: {
+//                 newTour,
+//             }
+//         });
+//     });
 
-    res.status(200).json({
-        status: 'success',
-        message: 'Executed Successfully'
-    });
-};
+//     res.status(200).json({
+//         status: 'success',
+//         message: 'Executed Successfully'
+//     });
+// };
 
 // Update a particular tour by id
-exports.UpdateTourById=(req,res)=>{
-    res.status(200).json({
-        status: 'Success',
-        data: {
-            tour:'<Updated Tour>'
-        }
-    });
-};
+// exports.UpdateTourById=(req,res)=>{
+//     res.status(200).json({
+//         status: 'Success',
+//         data: {
+//             tour:'<Updated Tour>'
+//         }
+//     });
+// };
 
 // delete tour by id
-exports.deleteTourById=(req,res)=>{
-    res.status(204).json({
-        status: 'Success',
-        data: null,
-    });
-};
+// exports.deleteTourById=(req,res)=>{
+//     res.status(204).json({
+//         status: 'Success',
+//         data: null,
+//     });
+// };
 
 
-// Now we will implementing the crud operations and interact with the database
+// Implement the crud operations and To create the database
 exports.createTour=async(req,res)=>{
     try{
 
@@ -126,3 +126,87 @@ exports.createTour=async(req,res)=>{
         })
     }
 }
+
+// to get all the tours
+exports.getAllTours=async(req,res)=>{
+    try{
+        // to find all the tours
+        const tours=await Tour.find();
+
+        res.status(200).json({
+            status: 'Success',
+            results: Tour.length,
+            data:{
+                tours
+            }
+        });
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        })
+    }    
+};
+
+// to get the particular tour
+exports.getTourById=async(req,res)=>{
+    try{
+        // to get the tour according to the id and here, we get the id from the database
+        const tour=await Tour.findById(req.params.id);
+
+        res.status(200).json({
+            status: 'success',
+            data:{
+                tour,
+            }
+        });
+
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        })
+    }
+};
+
+// Update a particular tour by id
+exports.UpdateTourById=async(req,res)=>{
+    try{
+        // we will update it
+        const tour=await Tour.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+        })
+
+        res.status(200).json({
+            status: 'success',
+            data:{
+                tour,
+            }
+        })
+
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        });
+    }
+};
+
+// delete tour by id
+exports.deleteTourById=async(req,res)=>{
+    try{
+        // now we will delete it and not sent any data to the client, when we delete it
+        const tour=await Tour.findByIdAndDelete(req.params.id);
+
+        res.status(204).json({
+            results: Tour.length,
+            data: null
+        });
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        });
+    }
+};
