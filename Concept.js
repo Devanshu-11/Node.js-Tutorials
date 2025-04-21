@@ -109,3 +109,17 @@
 
 // 6- to quit the mongo shell 
 // 1-quit()- In order to quit the mongo shell 
+
+// Mongoose-
+// 1- Mongoose is a Object Data Modelling library built specifically for MongoDB and Node.js
+// 2- It basically makes it easier to interact to the MongoDB from application
+// 3- It provides us the feature like- create the schemas for the data models and inside it, we can also put validations
+// 4- Also provide us a time stamp features
+// 5- Schema is defined as a blueprint of that document that is going to store in the mongodb collection
+
+// MVC Architecture-
+// 1- User made a particular request and it hits one of the router 
+// 2- From the router, it will go to the specific controller where the request is handled
+// 3- Then depend upon incoming request, controller interact with the models eg- to create a data in database
+// 4- After that it processes it and sends back response to the client contains that data 
+// 5- If it has templates,controller select view templates and inject data into it and sends response to user 

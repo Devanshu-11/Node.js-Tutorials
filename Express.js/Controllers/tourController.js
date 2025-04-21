@@ -1,4 +1,5 @@
 const fs=require('fs');
+const Tour=require('../models/tourModel');
 
 // get method
 const tours=JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`,'utf-8')); // we want that it should be read only one time and Json.parse is converting the Json formatting string into the javascript object and Json.stringify converts javascript object into Json formatting string
@@ -103,3 +104,25 @@ exports.deleteTourById=(req,res)=>{
         data: null,
     });
 };
+
+
+// Now we will implementing the crud operations and interact with the database
+exports.createTour=async(req,res)=>{
+    try{
+
+        // it creates a new Document in the database
+        const newTour=await Tour.create(req.body);
+
+        res.status(201).json({
+            status: 'Success',
+            data: {
+                tour: newTour
+            }
+        });
+    }catch(error){
+        res.status(400).json({
+            status: 'Failed',
+            message: 'Invalid data sent'
+        })
+    }
+}

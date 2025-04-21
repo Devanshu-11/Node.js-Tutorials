@@ -1,5 +1,5 @@
 const express=require('express');
-const {getAllTours, postTour, getTourById, UpdateTourById, deleteTourById,checkId, checkBody}=require('../Controllers/tourController');
+const {getAllTours, postTour, getTourById, UpdateTourById, deleteTourById,checkId, checkBody, createTour}=require('../Controllers/tourController');
 
 // to creating the router instance
 const router=express.Router();
@@ -11,7 +11,7 @@ router.param('id',checkId);
 router.get('/',getAllTours);
 
 // post method to create a particular tour
-router.post('/',checkBody,postTour);
+// router.post('/',checkBody,postTour);
 
 // get method to access the data of a particular id and also we can also make the parameter optional by writing question Mark in it
 router.get('/:id',getTourById);
@@ -21,6 +21,9 @@ router.patch('/:id',UpdateTourById);
 
 // Now we will create the delete method
 router.delete('/:id',deleteTourById);
+
+// to create the tour
+router.post('/',createTour);
 
 // export the router
 module.exports=router;
