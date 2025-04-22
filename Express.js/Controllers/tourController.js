@@ -16,6 +16,7 @@ exports.checkId=(req,res,next, val)=>{
             message: 'Invalid Id'
         });
     }
+
     next();
 }
 
@@ -27,6 +28,7 @@ exports.checkBody=(req,res,next)=>{
             message: 'Missing name or price'
         });
     }
+
     next();
 }
 
@@ -119,10 +121,11 @@ exports.createTour=async(req,res)=>{
                 tour: newTour
             }
         });
+
     }catch(error){
         res.status(400).json({
             status: 'Failed',
-            message: 'Invalid data sent'
+            message: error,
         })
     }
 }
@@ -130,16 +133,33 @@ exports.createTour=async(req,res)=>{
 // to get all the tours
 exports.getAllTours=async(req,res)=>{
     try{
-        // to find all the tours
-        const tours=await Tour.find();
+        // extract all query parameters from the request
+        const queryObj={...req.query};
+
+        // fields not be included in the query object
+        const excludeFields=['page','sort', 'limit','fields'];
+
+        // remove it by using for each
+        excludeFields.forEach(el=>delete queryObj[el]);
+
+        // Advanced Filtering and Json.stringfy converts the javascript object into the Json string
+        let queryStr=JSON.stringify(queryObj);
+        queryStr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+        // Json.parse converts the Json string into the javascript object
+        console.log(JSON.parse(queryStr));
+
+        // execute the query
+        const tours = await Tour.find(JSON.parse(queryStr));
 
         res.status(200).json({
             status: 'Success',
-            results: Tour.length,
+            results: tours.length,
             data:{
-                tours
+                tours,
             }
         });
+
     }catch(error){
         res.status(404).json({
             status: 'failed',
@@ -203,6 +223,7 @@ exports.deleteTourById=async(req,res)=>{
             results: Tour.length,
             data: null
         });
+
     }catch(error){
         res.status(404).json({
             status: 'failed',
