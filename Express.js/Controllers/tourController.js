@@ -1,5 +1,6 @@
 const fs=require('fs');
 const Tour=require('../models/tourModel');
+const qs=require('qs');
 
 // get method
 const tours=JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`,'utf-8')); // we want that it should be read only one time and Json.parse is converting the Json formatting string into the javascript object and Json.stringify converts javascript object into Json formatting string
@@ -133,6 +134,9 @@ exports.createTour=async(req,res)=>{
 // to get all the tours
 exports.getAllTours=async(req,res)=>{
     try{
+        // Parse the query string for nested filtering (e.g. duration[gte]=5)
+        const parsedQuery=qs.parse(req.query);
+
         // extract all query parameters from the request
         const queryObj={...req.query};
 
@@ -140,10 +144,10 @@ exports.getAllTours=async(req,res)=>{
         const excludeFields=['page','sort', 'limit','fields'];
 
         // remove it by using for each
-        excludeFields.forEach(el=>delete queryObj[el]);
+        excludeFields.forEach(el=>delete parsedQuery[el]);
 
         // Advanced Filtering and Json.stringfy converts the javascript object into the Json string
-        let queryStr=JSON.stringify(queryObj);
+        let queryStr=JSON.stringify(parsedQuery);
         queryStr=queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
 
         // Json.parse converts the Json string into the javascript object
