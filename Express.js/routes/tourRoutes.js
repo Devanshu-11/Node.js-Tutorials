@@ -1,8 +1,17 @@
 const express=require('express');
-const {getAllTours, postTour, getTourById, UpdateTourById, deleteTourById,checkId, checkBody, createTour}=require('../Controllers/tourController');
+const {getAllTours, postTour, getTourById, UpdateTourById, deleteTourById,checkId, checkBody, createTour,aliasTopTours, getTourStats,getMonthlyPlan}=require('../Controllers/tourController');
 
 // to creating the router instance
 const router=express.Router();
+
+// create a router to find top 5 cheap tours
+router.route('/top-5-cheap').get(aliasTopTours,getAllTours);
+
+// get method to get the tour stats
+router.get('/tour-stats', getTourStats);
+
+// get method for the monthly plan
+router.get('/monthly-plan/:year',getMonthlyPlan);
 
 // Param Middleware- It is the middleware that is specifically used to handle route parameters
 router.param('id',checkId);

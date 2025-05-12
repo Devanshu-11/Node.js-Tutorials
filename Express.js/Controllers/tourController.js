@@ -5,6 +5,14 @@ const qs=require('qs');
 // get method
 const tours=JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`,'utf-8')); // we want that it should be read only one time and Json.parse is converting the Json formatting string into the javascript object and Json.stringify converts javascript object into Json formatting string
 
+// Another Middleware
+exports.aliasTopTours=(req,res,next)=>{
+    req.query.limit='5';
+    req.query.sort='ratingsAverage, price';
+    req.query.fields='name, price, ratingsAverage, summary, difficulty';
+    next();
+}
+
 // creating a param middleware function
 exports.checkId=(req,res,next, val)=>{
     console.log(`Tour Id is ${val}`);
@@ -17,7 +25,6 @@ exports.checkId=(req,res,next, val)=>{
             message: 'Invalid Id'
         });
     }
-
     next();
 }
 
@@ -29,7 +36,6 @@ exports.checkBody=(req,res,next)=>{
             message: 'Missing name or price'
         });
     }
-
     next();
 }
 
@@ -47,6 +53,7 @@ exports.checkBody=(req,res,next)=>{
 //     });
 // };
 
+
 // get particular tour by id
 // exports.getTourById=(req,res)=>{
 //     const id = req.params.id * 1;
@@ -61,6 +68,7 @@ exports.checkBody=(req,res,next)=>{
 //         }
 //     });
 // };
+
 
 // Posting the particular tour
 // exports.postTour=(req,res)=>{
@@ -90,6 +98,7 @@ exports.checkBody=(req,res,next)=>{
 //     });
 // };
 
+
 // Update a particular tour by id
 // exports.UpdateTourById=(req,res)=>{
 //     res.status(200).json({
@@ -99,6 +108,7 @@ exports.checkBody=(req,res,next)=>{
 //         }
 //     });
 // };
+
 
 // delete tour by id
 // exports.deleteTourById=(req,res)=>{
@@ -154,7 +164,45 @@ exports.getAllTours=async(req,res)=>{
         console.log(JSON.parse(queryStr));
 
         // execute the query
-        const tours = await Tour.find(JSON.parse(queryStr));
+        let query = Tour.find(JSON.parse(queryStr));
+
+        // Now we will implementing the sorting
+        if(req.query.sort){
+            const sortBy=req.query.sort.split(',').join(' ');
+            console.log("Sort By: ",sortBy);
+            query=query.sort(req.query.sort);
+        }else{
+            query=query.sort('-createdAt');
+        }
+
+        // Field Limiting
+        if(req.query.fields){
+            const fields = req.query.fields.split(',').join(' ');
+            console.log("The Fields are: ",fields);
+            query=query.select(fields);
+        }else{
+            // we use (-) to exclude it
+            query=query.select('-__v')
+        }
+
+        // Pagination
+        const page=req.query.page*1||1;
+        const limit=req.query.limit*1||10;
+        const skip=(page-1)*limit;
+
+        // Now we will execute the query
+        query=query.skip(skip).limit(limit);
+
+        // Validation
+        if(req.query.page){
+            const numberOfTours=await Tour.countDocuments();
+            if(skip>=numberOfTours){
+                throw new Error('This Page does not exists');
+            }
+        }
+
+        // Execute the query to get the tours
+        const tours = await query;
 
         res.status(200).json({
             status: 'Success',
@@ -235,3 +283,111 @@ exports.deleteTourById=async(req,res)=>{
         });
     }
 };
+
+// Aggregation Pipeline is a way to process and analyze the data in a sequence of steps
+exports.getTourStats=async(req,res)=>{
+    try{
+        const stats=await Tour.aggregate([
+            // match stage- it filter documents based on certain conditions
+            {
+                $match: {ratingsAverage: {$gte:4.5}}
+            },
+
+            // Group stage-it is basically used to group the documents together
+            {
+                $group: {
+
+                    // We use null to represents the no grouping by specific fields
+                    // _id: null,
+
+                    _id: '$difficulty',
+                    numTours: { $sum: 1}, // add 1 for each document
+                    numRating: {$sum: '$ratingsQuantity'},
+                    avgRating: {$avg: '$ratingsAverage'},
+                    avgPrice: {$avg: '$price'},
+                    minPrice: {$min: '$price'},
+                    maxPrice: {$max: '$price'}
+                }
+            },
+            // sort stage
+            {
+                // average price is 1 for ascending order
+                $sort: {avgPrice:1}
+            },
+
+            // again match
+            {
+                // Not equals to easy
+                $match: {_id: {$ne: 'easy'}}
+            }
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            data:{
+                stats,
+            }
+        })
+
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        })
+    }
+}
+
+// To calculate the Monthly Plan
+exports.getMonthlyPlan= async(req,res)=>{
+    try{
+        const year=req.params.year*1; // to convert it into the number
+        const plan=await Tour.aggregate([
+
+            // unwind is an aggregation pipeline to deconstruct an array field from the input documents and output a document for each element in array
+            {
+                $unwind: '$startDates'
+            },
+            {
+                $match:{
+                    startDates: {
+                        $gte: new Date(`${year}-01-01`),
+                        $lte: new Date(`${year}-12-31`)
+                    }
+                }
+            },
+            {
+                $group: {
+                    _id: {$month:'$startDates'},
+                    numTourStarts: {$sum: 1},
+                    tours: {$push:'$name'}
+                }
+            },
+            {
+                $addFields: {month:'$_id'}
+            },
+            {
+                $project: {_id: 0}
+            },
+            {
+                // used -1 for descending 
+                $sort: {numTourStarts:-1}
+            },
+            {
+                $limit:12
+            }
+        ]);
+
+        res.status(200).json({
+            status: 'success',
+            data:{
+                plan,
+            }
+        })
+
+    }catch(error){
+        res.status(404).json({
+            status: 'failed',
+            message: error,
+        })
+    }
+}

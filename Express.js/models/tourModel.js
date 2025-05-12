@@ -61,7 +61,8 @@ const tourSchema=new mongoose.Schema({
     // time stamp
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: false,
     },
     startDates:{
         type: [Date],
@@ -69,7 +70,7 @@ const tourSchema=new mongoose.Schema({
 });
 
 // After Defining a schema, we will create model 
-const Tour = mongoose.model('Tour', tourSchema);
+const Tour=mongoose.model('Tour', tourSchema);
 
 // exports the file
 module.exports=Tour;
