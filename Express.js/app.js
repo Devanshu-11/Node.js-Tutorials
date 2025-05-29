@@ -50,5 +50,29 @@ app.post('/',(req,res)=>{
 app.use('/api/v2/tours',tourRouter);
 app.use('/api/v2/users',userRouter);
 
+// Handling Unhandled routes
+app.all('/*api/', (req, res,next) => {
+    const err=new Error(`Cannot find the ${req.originalUrl} on this server`);
+    err.status='Failed';
+    err.statusCode=404;
+    next(err);
+
+    // res.status(404).json({
+    //     status: 'Failed',
+    //     message: `Cannot find the ${req.originalUrl} on this server`
+    // });
+});
+
+// Error Handling Middleware
+app.use((err,req,res,next)=>{
+    err.statusCode=err.statusCode||500;
+    err.status=err.status||'error';
+
+    res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message
+    })
+})
+
 // exports the application
 module.exports=app;

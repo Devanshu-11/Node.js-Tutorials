@@ -316,10 +316,10 @@ exports.getTourStats=async(req,res)=>{
             },
 
             // again match
-            {
+            // {
                 // Not equals to easy
-                $match: {_id: {$ne: 'easy'}}
-            }
+            //     $match: {_id: {$ne: 'easy'}}
+            // }
         ]);
 
         res.status(200).json({
